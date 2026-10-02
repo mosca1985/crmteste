@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html/clientes/crmteste/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R api assets config painel $DEPLOYPATH
+    - /bin/cp index.php privacidade.php sitemap.php favicon.ico robots.txt .htaccess $DEPLOYPATH

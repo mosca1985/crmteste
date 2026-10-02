@@ -1,0 +1,145 @@
+/* Placar de vendas para TV (16:9). Tudo em rem; o tamanho base acompanha a tela. */
+:root{
+  --bg:#0a0a0a; --card:#141414; --card2:#191919; --line:rgba(255,255,255,.08);
+  --text:#f5f3f0; --muted:#bab5ae; --dim:#87827b;
+  --violet:#d417ff;--clara:#e6b8ff;--rgb-primaria:212,23,255;--rgb-secundaria:135,42,184; --purple:#872ab8; --pink:var(--clara); --gold:#ffc94d; --silver:#d6dbe4; --bronze:#e0995e;
+  --ok:#3ddc97;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:min(1.62vh,.92vw);background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;overflow:hidden;height:100vh;cursor:default}
+body.idle{cursor:none}
+.tv{height:100vh;display:grid;gap:1.25rem;padding:1.5rem 2rem 1rem;
+  grid-template-columns:.82fr 1.55fr 1fr;grid-template-rows:auto 1.12fr .88fr auto;
+  grid-template-areas:"top top top" "meta rank kpis" "meta ritmo feed" "foot foot foot";
+  background:radial-gradient(60rem 40rem at 8% 0%,rgba(var(--rgb-secundaria),.22),transparent 60%),
+             radial-gradient(50rem 40rem at 100% 100%,rgba(var(--rgb-primaria),.12),transparent 60%),var(--bg)}
+
+/* topo */
+.tv-top{grid-area:top;display:flex;align-items:center;gap:1.6rem}
+.tv-logo{height:3.2rem}
+.tv-title{display:flex;flex-direction:column;line-height:1.1}
+.tv-title span{font:700 1rem Manrope;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tv-title b{font:800 2.3rem Sora;letter-spacing:-.02em}
+.tv-clock{margin-left:auto;text-align:right;line-height:1.05}
+.tv-clock b{font:700 3rem Sora;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tv-clock small{display:block;color:var(--muted);font-size:1.05rem;font-weight:600;text-transform:capitalize}
+
+/* cartões */
+.panel{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:1.6rem;padding:1.4rem 1.6rem;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.panel h2{font:700 1.35rem Sora;letter-spacing:-.01em;margin-bottom:1rem;display:flex;align-items:baseline;gap:.7rem}
+.panel h2 small{font:600 .95rem Manrope;color:var(--dim)}
+
+/* termômetro da meta */
+.meta{grid-area:meta;align-items:center;text-align:center}
+.meta h2{align-self:flex-start}
+.thermo{position:relative;flex:1;min-height:0;width:100%;display:grid;grid-template-columns:1fr 5.2rem 1fr;grid-template-rows:1fr 8rem;justify-items:center}
+.thermo-tube{grid-column:2;grid-row:1;position:relative;width:3.6rem;height:100%;margin-bottom:-1.8rem;border-radius:2rem 2rem 0 0;
+  background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.12);border-bottom:0;overflow:hidden}
+.thermo-fill{position:absolute;left:.45rem;right:.45rem;bottom:0;height:calc(var(--p,0) * 1%);border-radius:1.6rem 1.6rem 0 0;
+  background:linear-gradient(0deg,var(--purple),var(--violet) 55%,var(--pink));box-shadow:0 0 2rem rgba(var(--rgb-primaria),.55);
+  transition:height 2.2s cubic-bezier(.2,.8,.2,1)}
+.thermo-shine{position:absolute;inset:0 auto 0 18%;width:22%;border-radius:1rem;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.05))}
+.thermo-fill::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,transparent 0 40%,rgba(255,255,255,.18) 50%,transparent 60% 100%);
+  background-size:100% 300%;animation:sobe 3.2s linear infinite}
+@keyframes sobe{from{background-position:0 0}to{background-position:0 -300%}}
+.thermo-bulb{grid-column:2;grid-row:2;width:8rem;height:8rem;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1;
+  background:radial-gradient(circle at 35% 30%,var(--pink),var(--violet) 45%,var(--purple));border:2px solid rgba(255,255,255,.14);
+  box-shadow:0 0 3rem rgba(var(--rgb-primaria),.5),inset 0 -.8rem 1.5rem rgba(0,0,0,.25)}
+.thermo-bulb span{font:800 2rem Sora;letter-spacing:-.03em;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.thermo-scale{grid-column:1;grid-row:1;justify-self:end;position:relative;width:100%;height:100%;margin-bottom:-1.8rem}
+.thermo-scale span{position:absolute;right:.9rem;transform:translateY(50%);font:700 1rem Manrope;color:var(--dim);font-variant-numeric:tabular-nums}
+.thermo-scale span::after{content:"";position:absolute;right:-.9rem;top:50%;width:.6rem;height:2px;background:rgba(255,255,255,.18)}
+.meta-num{margin-top:1rem;display:flex;align-items:baseline;justify-content:center;gap:.6rem}
+.meta-num b{font:800 4.2rem Sora;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.meta-num span{color:var(--muted);font-weight:700;font-size:1.25rem}
+.meta-num i{font-style:normal;color:var(--text)}
+.meta-sub{margin-top:.5rem;color:var(--muted);font-size:1.1rem;font-weight:600;min-height:1.5em}
+.meta-sub b{color:var(--text)}
+.meta.batida .thermo-fill{background:linear-gradient(0deg,#d18a12,var(--gold) 60%,#fff1bf);box-shadow:0 0 2.5rem rgba(255,201,77,.6)}
+.meta.batida .thermo-bulb{background:radial-gradient(circle at 35% 30%,#fff1bf,var(--gold) 45%,#d18a12);box-shadow:0 0 3rem rgba(255,201,77,.55)}
+.meta.batida .thermo-bulb span{color:#2a1a00;text-shadow:none}
+
+/* ranking */
+.rank{grid-area:rank}
+.rank-list{list-style:none;flex:1;display:flex;flex-direction:column;gap:.7rem;min-height:0}
+.rank-list li{flex:1;min-height:0;max-height:6.2rem;display:grid;grid-template-columns:2.6rem 4.4rem 1fr auto;align-items:center;gap:1.1rem;
+  padding:.5rem 1.2rem .5rem .8rem;border-radius:1.2rem;background:rgba(255,255,255,.03);border:1px solid transparent;transition:transform .6s,background .6s}
+.rank-list li.lider{background:linear-gradient(90deg,rgba(255,201,77,.14),rgba(255,201,77,.02));border-color:rgba(255,201,77,.35)}
+.pos{font:800 1.7rem Sora;color:var(--dim);text-align:center}
+.lider .pos{color:var(--gold)} .p2 .pos{color:var(--silver)} .p3 .pos{color:var(--bronze)}
+.rank-list img{width:4.4rem;height:4.4rem;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.12)}
+.lider img{border-color:var(--gold);box-shadow:0 0 1.4rem rgba(255,201,77,.45)}
+.p2 img{border-color:var(--silver)} .p3 img{border-color:var(--bronze)}
+.who{min-width:0}
+.who b{display:flex;align-items:center;gap:.6rem;font:700 1.45rem Sora;letter-spacing:-.01em;white-space:nowrap}
+.who .coroa{font-size:1.3rem}
+.bar{margin-top:.55rem;height:.75rem;border-radius:1rem;background:rgba(255,255,255,.06);overflow:hidden}
+.bar i{display:block;height:100%;width:calc(var(--w,0) * 1%);border-radius:1rem;background:linear-gradient(90deg,var(--purple),var(--violet));transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.lider .bar i{background:linear-gradient(90deg,#d18a12,var(--gold))}
+.who small{display:block;margin-top:.45rem;color:var(--dim);font-size:.95rem;font-weight:600}
+.score{text-align:right;line-height:1}
+.score b{display:block;font:800 2.6rem Sora;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.score small{color:var(--muted);font-size:.9rem;font-weight:700}
+.hoje{display:inline-block;margin-left:.2rem;padding:.15rem .55rem;border-radius:1rem;background:rgba(61,220,151,.15);color:var(--ok);font:800 .85rem Manrope}
+
+/* números */
+.kpis{grid-area:kpis;display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.2rem}
+.kpi{border-radius:1.2rem;background:rgba(255,255,255,.035);border:1px solid var(--line);padding:1rem 1.2rem;display:flex;flex-direction:column;justify-content:center}
+.kpi small{color:var(--muted);font-weight:700;font-size:1rem;letter-spacing:.02em}
+.kpi b{font:800 3.4rem Sora;letter-spacing:-.04em;line-height:1.05;margin-top:.3rem;font-variant-numeric:tabular-nums}
+.kpi:first-child b{color:var(--ok)}
+
+/* gráfico de ritmo */
+.ritmo{grid-area:ritmo}
+.chart{flex:1;min-height:0;position:relative}
+.chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.chart .grid line{stroke:rgba(255,255,255,.07);stroke-width:1}
+.chart .eixo text{fill:var(--dim);font:600 .85rem Manrope;font-variant-numeric:tabular-nums}
+.chart .ideal{fill:none;stroke:rgba(255,255,255,.35);stroke-width:2;stroke-dasharray:6 6}
+.chart .area{fill:url(#gArea)}
+.chart .linha{fill:none;stroke:var(--violet);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.chart .ponto{fill:var(--violet);stroke:var(--card);stroke-width:3}
+.chart .rot{font:800 1.3rem Sora;fill:var(--text)}
+.chart .rot-ideal{font:700 .85rem Manrope;fill:var(--muted)}
+
+/* últimas vendas */
+.feed{grid-area:feed}
+.feed ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;min-height:0;overflow:hidden}
+.feed li{display:grid;grid-template-columns:2.8rem 1fr auto;gap:.8rem;align-items:center;animation:entra .8s both}
+.feed img{width:2.8rem;height:2.8rem;border-radius:50%;object-fit:cover}
+.feed b{display:block;font:700 1.1rem Sora;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed small{color:var(--muted);font-weight:600;font-size:.95rem}
+.feed time{color:var(--dim);font-size:.9rem;font-weight:700;white-space:nowrap}
+.feed .vazio{color:var(--dim);font-weight:600}
+@keyframes entra{from{opacity:0;transform:translateY(.6rem)}}
+
+/* rodapé */
+.tv-foot{grid-area:foot;display:flex;justify-content:space-between;align-items:center;color:var(--dim);font-size:.9rem;font-weight:600}
+.tv-foot button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:1rem;padding:.3rem .9rem;font:700 .9rem Manrope;cursor:pointer}
+.tv-foot .off{color:#ff7a8a}
+
+/* comemoração de venda */
+.party{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:rgba(10,10,10,.72);backdrop-filter:blur(6px);animation:fade .4s both}
+.party[hidden]{display:none}
+.party canvas{position:absolute;inset:0;width:100%;height:100%}
+.party-card{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1rem;animation:pop .7s cubic-bezier(.2,1.4,.4,1) both}
+.party-tag{font:800 4.4rem Sora;letter-spacing:-.03em;background:linear-gradient(90deg,var(--gold),#fff1bf,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.party-card img{width:15rem;height:15rem;border-radius:50%;object-fit:cover;border:.4rem solid var(--gold);box-shadow:0 0 5rem rgba(255,201,77,.55)}
+.party-card b{font:800 3.6rem Sora;letter-spacing:-.03em}
+.party-card small{font:700 1.8rem Manrope;color:var(--muted)}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* tela em pé (TV na vertical ou celular): empilha */
+@media (max-aspect-ratio:1/1){
+  html{font-size:min(1.1vh,2.2vw)}
+  body{overflow:auto;height:auto}
+  .tv{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto;
+    grid-template-areas:"top top" "meta kpis" "rank rank" "ritmo ritmo" "feed feed" "foot foot"}
+  .meta{min-height:38rem} .rank{min-height:34rem} .ritmo{min-height:22rem}
+}
+
+/* logo em texto */
+.tv-top .logo-txt{font:800 2.4rem Sora;letter-spacing:-.03em;white-space:nowrap}

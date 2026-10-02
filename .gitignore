@@ -1,0 +1,5 @@
+.claude/
+.DS_Store
+Thumbs.db
+api/config.php
+vendas-config.php
