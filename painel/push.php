@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 require __DIR__ . '/_core.php';
-require dirname(__DIR__) . '/clientes/crmteste/api/webpush.php';
+require dirname(__DIR__) . '/api/webpush.php';
 
 $u = usuario();
 if (!$u) json_out(['error' => 'login'], 401);

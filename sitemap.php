@@ -1,7 +1,7 @@
 <?php
 /** Sitemap para o Google (endereço vem de config/empresa.php). Informe /sitemap.xml no Search Console. */
 declare(strict_types=1);
-require __DIR__ . '/clientes/crmteste/api/bootstrap.php';
+require __DIR__ . '/api/bootstrap.php';
 header('Content-Type: application/xml; charset=utf-8');
 $url = 'https://' . empresa('dominio') . '/clientes/crmteste/';
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";

@@ -134,7 +134,7 @@ function cfg(): array
             $raiz !== '' ? dirname($raiz) . '/vendas-config.php' : '', // acima da raiz pública informada pelo servidor
             dirname(__DIR__) . '/vendas-config.php',               // raiz do site (bloqueado no .htaccess)
             __DIR__ . '/config.php',                                    // api/config.php (bloqueado no .htaccess)
-            dirname(__DIR__) . '/clientes/crmteste/api/vendas-config.php',           // api/ com o nome do modelo
+            dirname(__DIR__) . '/api/vendas-config.php',           // api/ com o nome do modelo
         ]));
         $f = null;
         foreach ($candidatos as $cand) {

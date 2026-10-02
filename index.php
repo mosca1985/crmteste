@@ -4,7 +4,7 @@
  * para um cliente novo (só se quiser mudar o layout).
  */
 declare(strict_types=1);
-require __DIR__ . '/clientes/crmteste/api/bootstrap.php';
+require __DIR__ . '/api/bootstrap.php';
 
 $E = empresa();
 $h = function ($v): string { return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'); };

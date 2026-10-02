@@ -1,7 +1,7 @@
 <?php
 /** Política de privacidade (dados da empresa vêm de config/empresa.php). */
 declare(strict_types=1);
-require __DIR__ . '/clientes/crmteste/api/bootstrap.php';
+require __DIR__ . '/api/bootstrap.php';
 $E = empresa();
 $h = function ($v): string { return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'); };
 $end = $E['endereco'];
